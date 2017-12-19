@@ -11,3 +11,6 @@ cp package.json lambda-files
 cd lambda-files || exit "Directory 'lambda-files' does not exist"
 npm install --no-package-lock --production
 rm package.json
+cd ..
+# Remove unnecessary files from node_modules before checking in to version control
+./node_modules/.bin/modclean --no-progress --run --path lambda-files
