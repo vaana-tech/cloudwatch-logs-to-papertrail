@@ -4,6 +4,8 @@
   "description": "A solution for pushing logs from a CloudWatch log group to Papertrail, with a Terraform module for creating infrastructure",
   "main": "cloudwatch-papertrail.ts",
   "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf lambda-files"
   },
   "author": "Vaana",
   "license": "MIT",
