@@ -1,6 +1,6 @@
 data "archive_file" "papertrail_lambda" {
     type = "zip"
-    source_dir = "${path.module}/papertrail-lambda-files"
+    source_dir = "${path.module}/lambda-files"
     output_path = "${path.module}/papertrail-lambda.zip"
 }
 
