@@ -18,3 +18,7 @@ variable "timeout" {
     description = "The timeout for the Lambda which sends log entries to Papertrail"
     default = "10"
 }
+
+variable "lamba_log_role_arn" {
+    description = "The ARN for the role used by the Lambda which sends logs to Papertrail. Must include permissions for writing to CloudWatch logs."
+}
