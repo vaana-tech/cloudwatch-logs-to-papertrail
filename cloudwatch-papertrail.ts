@@ -53,26 +53,26 @@ export const handler: AwsLambda.Handler = (event: CloudwatchLogGroupsEvent, cont
 
   unarchiveLogData(payload)
     .then((logData: LogData) => {
+      console.log("Got log data")
+      console.log(logData)
 
-    const papertrailTransport = new winston.transports.Papertrail
+      const papertrailTransport = new winston.transports.Papertrail({
+        host,
+        port,
+        program: logData.logGroup,
+        hostname: logData.logStream,
+        flushOnClose: true,
+      })
 
-    const logger = new (winston.Logger)({
-      transports: []
+      const logger = new (winston.Logger)({
+        transports: [papertrailTransport]
+      });
+
+      logData.logEvents.forEach(function (line) {
+        logger.info(line.message);
+      });
+
+      logger.close()
+      return callback!(null);
     });
-
-    logger.add(papertrailTransport, {
-      host,
-      port,
-      program: logData.logGroup,
-      hostname: logData.logStream,
-      flushOnClose: true,
-    });
-
-    logData.logEvents.forEach(function (line) {
-      logger.info(line.message);
-    });
-
-    logger.close()
-    return callback!(null);
-  });
 };
