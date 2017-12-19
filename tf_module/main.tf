@@ -31,8 +31,10 @@ resource "aws_lambda_function" "papertrail" {
     runtime = "nodejs6.10"
     timeout = "${var.timeout}"
     environment = {
-        PAPERTRAIL_HOST = "${var.papertrail_host}"
-        PAPERTRAIL_PORT = "${var.papertrail_port}"
+        variables = {
+            PAPERTRAIL_HOST = "${var.papertrail_host}"
+            PAPERTRAIL_PORT = "${var.papertrail_port}"
+        }
     }
     source_code_hash = "${data.archive_file.papertrail_lambda.output_base64sha256}"
 }
