@@ -8,7 +8,7 @@ resource "aws_lambda_permission" "allow_cloudwatch" {
     statement_id   = "AllowExecutionFromCloudWatch"
     action = "lambda:InvokeFunction"
     function_name = "${aws_lambda_function.papertrail.function_name}"
-    principal = "${var.monitor_log_group_arn}"
+    principal = "logs.amazonaws.com"
 }
 
 resource "aws_cloudwatch_log_subscription_filter" "all_logs" {
