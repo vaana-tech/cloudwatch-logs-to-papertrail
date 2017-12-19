@@ -14,4 +14,6 @@ rm package.json
 cd ..
 # Remove unnecessary files from node_modules before checking in to version control
 ./node_modules/.bin/modclean --no-progress --run --path lambda-files
+# Overwrite the lambda-files folder in tf_module
+rm -rf tf_module/lambda-files
 mv lambda-files tf_module
