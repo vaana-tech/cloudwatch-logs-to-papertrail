@@ -30,16 +30,17 @@ exports.handler = (event, context, callback) => {
     const port = getEnvVarOrFail('PAPERTRAIL_PORT');
     unarchiveLogData(payload)
         .then((logData) => {
-        const papertrailTransport = new winston.transports.Papertrail;
-        const logger = new (winston.Logger)({
-            transports: []
-        });
-        logger.add(papertrailTransport, {
+        console.log("Got log data");
+        console.log(logData);
+        const papertrailTransport = new winston.transports.Papertrail({
             host,
             port,
             program: logData.logGroup,
             hostname: logData.logStream,
             flushOnClose: true,
+        });
+        const logger = new (winston.Logger)({
+            transports: [papertrailTransport]
         });
         logData.logEvents.forEach(function (line) {
             logger.info(line.message);
