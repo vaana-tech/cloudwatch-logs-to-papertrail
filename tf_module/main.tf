@@ -24,7 +24,7 @@ resource "aws_cloudwatch_log_subscription_filter" "all_logs" {
 
 resource "aws_lambda_function" "papertrail" {
     filename = "${data.archive_file.papertrail_lambda.output_path}"
-    function_name = "${var.log_group_to_monitor}-papertrail-lambda"
+    function_name = "${var.lambda_name_prefix}-papertrail-lambda"
     handler = "cloudwatch-papertrail.handler"
     role = "${var.lambda_log_role_arn}"
     description = "Receives events from a CloudWatch log group and sends them to Papertrail"

@@ -22,3 +22,7 @@ variable "timeout" {
 variable "lambda_log_role_arn" {
     description = "The ARN for the role used by the Lambda which sends logs to Papertrail. Must include permissions for writing to CloudWatch logs."
 }
+
+variable "lambda_name_prefix" {
+    description = "Will be used to create the Papertrail sending Lambda function name as 'PREFIX-papertrail-lambda', has the same restrictions as a normal Lambda name"
+}
