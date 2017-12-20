@@ -5,7 +5,7 @@ data "archive_file" "papertrail_lambda" {
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch" {
-    statement_id   = "AllowExecutionFromCloudWatch"
+    statement_id = "AllowExecutionFromCloudWatch"
     action = "lambda:InvokeFunction"
     function_name = "${aws_lambda_function.papertrail.function_name}"
     principal = "logs.amazonaws.com"
