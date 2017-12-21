@@ -6,14 +6,18 @@
 # through the Terraform module
 
 mkdir -p lambda-files
+echo "* Compiling TypeScript sources"
 npm run-script build
 cp package.json lambda-files
 cd lambda-files || exit "Directory 'lambda-files' does not exist"
+echo "* Installing Javascript dependencies for Lambda"
 npm install --no-package-lock --production
+echo "* Removing test folder and package.json from Lambda source files"
+rm -rf test
 rm package.json
 cd ..
-# Remove unnecessary files from node_modules before checking in to version control
+echo "* Cleaning out unnecessary files from Lambda's node_modules"
 ./node_modules/.bin/modclean --no-progress --run --path lambda-files
-# Overwrite the lambda-files folder in tf_module
+echo "* Overwriting the lambda-files folder in tf_module"
 rm -rf tf_module/lambda-files
 mv lambda-files tf_module
