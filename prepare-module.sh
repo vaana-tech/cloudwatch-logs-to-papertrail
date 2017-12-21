@@ -5,6 +5,10 @@
 # This code should be checked in to version control to make it available to users
 # through the Terraform module
 
+set -e
+set -u
+set -o pipefail
+
 mkdir -p lambda-files
 npm run-script build
 cp package.json lambda-files
