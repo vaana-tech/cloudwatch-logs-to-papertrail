@@ -47,9 +47,9 @@ function getEnvVarOrFail(varName: string): string {
 }
 
 export const handler: AwsLambda.Handler = (event: CloudwatchLogGroupsEvent, context, callback) => {
-  const payload = new Buffer(event.awslogs.data, 'base64');
   const host = getEnvVarOrFail('PAPERTRAIL_HOST')
   const port = getEnvVarOrFail('PAPERTRAIL_PORT')
+  const payload = new Buffer(event.awslogs.data, 'base64');
 
   unarchiveLogData(payload)
     .then((logData: LogData) => {
