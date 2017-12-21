@@ -25,9 +25,9 @@ function getEnvVarOrFail(varName) {
     return value;
 }
 exports.handler = (event, context, callback) => {
-    const payload = new Buffer(event.awslogs.data, 'base64');
     const host = getEnvVarOrFail('PAPERTRAIL_HOST');
     const port = getEnvVarOrFail('PAPERTRAIL_PORT');
+    const payload = new Buffer(event.awslogs.data, 'base64');
     unarchiveLogData(payload)
         .then((logData) => {
         console.log("Got log data");
@@ -47,5 +47,6 @@ exports.handler = (event, context, callback) => {
         });
         logger.close();
         return callback(null);
-    });
+    })
+        .catch(callback);
 };
