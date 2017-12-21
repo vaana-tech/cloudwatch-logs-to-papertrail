@@ -26,7 +26,15 @@ function getEnvVarOrFail(varName) {
 }
 // Should match for example: "[error] The database has exploded"
 const logLevelRegex = /^\[(\w+)\]/;
-function parseLogLevel(message) {
+function parseLogLevel(tsvMessage) {
+    // The message is a tab separated value string of three columns:
+    // date string (ISO8601), request ID, log message
+    const messageColumns = tsvMessage.split("\t");
+    if (messageColumns.length != 3) {
+        console.warn('Got message with unexpected number of TSV columns:', tsvMessage);
+        return undefined;
+    }
+    const message = messageColumns[2];
     const match = logLevelRegex.exec(message);
     if (match) {
         return match[1].toLowerCase();
