@@ -46,10 +46,23 @@ function getEnvVarOrFail(varName: string): string {
   return value
 }
 
+// Should match for example: "[error] The database has exploded"
+const logLevelRegex = /^\[(\w+)\]/
+
+export function parseLogLevel(message: string): string | undefined {
+  const match = logLevelRegex.exec(message)
+  if (match) {
+    return match[1].toLowerCase()
+  } else {
+    return undefined
+  }
+}
+
 export const handler: AwsLambda.Handler = (event: CloudwatchLogGroupsEvent, context, callback) => {
   const payload = new Buffer(event.awslogs.data, 'base64');
   const host = getEnvVarOrFail('PAPERTRAIL_HOST')
   const port = getEnvVarOrFail('PAPERTRAIL_PORT')
+  const shouldParseLogLevels = getEnvVarOrFail('PARSE_LOG_LEVELS') === "true"
 
   unarchiveLogData(payload)
     .then((logData: LogData) => {
@@ -68,8 +81,11 @@ export const handler: AwsLambda.Handler = (event: CloudwatchLogGroupsEvent, cont
         transports: [papertrailTransport]
       });
 
-      logData.logEvents.forEach(function (line) {
-        logger.info(line.message);
+      logData.logEvents.forEach(function (event) {
+        const logLevel = shouldParseLogLevels
+          ? parseLogLevel(event.message) || 'info'
+          : 'info'
+        logger.log(logLevel, event.message);
       });
 
       logger.close()

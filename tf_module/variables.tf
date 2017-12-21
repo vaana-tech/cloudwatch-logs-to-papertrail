@@ -30,3 +30,8 @@ variable "lambda_log_role_arn" {
 variable "lambda_name_prefix" {
     description = "Will be used to create the Papertrail sending Lambda function name as 'PREFIX-papertrail-lambda', has the same restrictions as a normal Lambda name"
 }
+
+variable "parse_log_levels" {
+    description = "If true, the log entries will be parsed for markers describing their log level"
+    default = "false"
+}

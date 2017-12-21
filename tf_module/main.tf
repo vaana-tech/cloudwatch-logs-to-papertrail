@@ -30,6 +30,7 @@ resource "aws_lambda_function" "papertrail" {
         variables = {
             PAPERTRAIL_HOST = "${var.papertrail_host}"
             PAPERTRAIL_PORT = "${var.papertrail_port}"
+            PARSE_LOG_LEVELS = "${var.parse_log_levels}"
         }
     }
     source_code_hash = "${data.archive_file.papertrail_lambda.output_base64sha256}"
