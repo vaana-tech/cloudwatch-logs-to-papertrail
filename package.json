@@ -1,0 +1,23 @@
+{
+  "name": "cloudwatch-logs-to-papertrail",
+  "version": "0.0.1",
+  "description": "A solution for pushing logs from a CloudWatch log group to Papertrail, with a Terraform module for creating infrastructure",
+  "main": "cloudwatch-papertrail.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf lambda-files"
+  },
+  "author": "Vaana",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/aws-lambda": "0.0.23",
+    "@types/node": "8.5.1",
+    "@types/winston": "2.3.7",
+    "modclean": "2.1.2",
+    "typescript": "2.6.2"
+  },
+  "dependencies": {
+    "winston": "2.4.0",
+    "winston-papertrail": "1.0.5"
+  }
+}
