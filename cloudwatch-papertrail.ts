@@ -74,5 +74,6 @@ export const handler: AwsLambda.Handler = (event: CloudwatchLogGroupsEvent, cont
 
       logger.close()
       return callback!(null);
-    });
+    })
+    .catch(callback!)
 };
