@@ -44,10 +44,10 @@ function parseLogLevel(tsvMessage) {
 }
 exports.parseLogLevel = parseLogLevel;
 exports.handler = (event, context, callback) => {
-    const payload = new Buffer(event.awslogs.data, 'base64');
     const host = getEnvVarOrFail('PAPERTRAIL_HOST');
     const port = getEnvVarOrFail('PAPERTRAIL_PORT');
     const shouldParseLogLevels = getEnvVarOrFail('PARSE_LOG_LEVELS') === "true";
+    const payload = new Buffer(event.awslogs.data, 'base64');
     unarchiveLogData(payload)
         .then((logData) => {
         console.log("Got log data");
@@ -70,5 +70,6 @@ exports.handler = (event, context, callback) => {
         });
         logger.close();
         return callback(null);
-    });
+    })
+        .catch(callback);
 };

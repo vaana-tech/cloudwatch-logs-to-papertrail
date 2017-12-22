@@ -66,10 +66,10 @@ export function parseLogLevel(tsvMessage: string): string | undefined {
 }
 
 export const handler: AwsLambda.Handler = (event: CloudwatchLogGroupsEvent, context, callback) => {
-  const payload = new Buffer(event.awslogs.data, 'base64');
   const host = getEnvVarOrFail('PAPERTRAIL_HOST')
   const port = getEnvVarOrFail('PAPERTRAIL_PORT')
   const shouldParseLogLevels = getEnvVarOrFail('PARSE_LOG_LEVELS') === "true"
+  const payload = new Buffer(event.awslogs.data, 'base64');
 
   unarchiveLogData(payload)
     .then((logData: LogData) => {
@@ -97,5 +97,6 @@ export const handler: AwsLambda.Handler = (event: CloudwatchLogGroupsEvent, cont
 
       logger.close()
       return callback!(null);
-    });
+    })
+    .catch(callback!)
 };
