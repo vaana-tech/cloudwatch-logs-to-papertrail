@@ -8,6 +8,9 @@
     "clean": "rm -rf lambda-files",
     "test": "mocha --require ts-node/register --watch-extensions ts,tsx \"test/**/*.{ts,tsx}\""
   },
+  "engines": {
+    "node": "6.10.3"
+  },
   "author": "Vaana",
   "license": "MIT",
   "devDependencies": {
