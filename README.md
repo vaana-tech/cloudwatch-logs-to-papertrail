@@ -17,7 +17,7 @@ The solution mentioned above is provided as a Terraform module that can be used 
 
 - An AWS account with a resource that outputs log entries into a CloudWatch log group (for example an AWS Lambda)
 - An IAM role for the Lambda which sends data to Papertrail, this role only needs basic CloudWatch logging permissions
-- Terraform (if you want to automatically create the required infrastructure resources)
+- Terraform (if you want to automatically create the required infrastructure resources). We are not currently aware of any specific minimum version of Terraform required to use this module. Please open up an issue if you cannot use this with your version. We have tested this with Terraform 0.10.0
 - A Papertrail account
 
 # Usage
