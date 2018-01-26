@@ -22,6 +22,8 @@ rm package.json package-lock.json
 cd ..
 echo "* Cleaning out unnecessary files from Lambda's node_modules"
 ./node_modules/.bin/modclean --no-progress --run --path lambda-files
-echo "* Overwriting the lambda-files folder in tf_module"
+echo "* Removing unnecessary underscore fields from package.json files"
+./node_modules/.bin/removeNPMAbsolutePaths lambda-files
+echo "* Removing and replacing the lambda-files folder in tf_module"
 rm -rf tf_module/lambda-files
 mv lambda-files tf_module

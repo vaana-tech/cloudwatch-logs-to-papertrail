@@ -21,6 +21,7 @@
     "ceylon": "0.9.1",
     "mocha": "4.0.1",
     "modclean": "2.1.2",
+    "removeNPMAbsolutePaths": "1.0.4",
     "ts-node": "4.0.2",
     "typescript": "2.6.2"
   },
