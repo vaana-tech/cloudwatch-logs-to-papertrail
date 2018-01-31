@@ -47,22 +47,17 @@ function getEnvVarOrFail(varName: string): string {
 }
 
 // Should match for example: "[error] The database has exploded"
-const logLevelRegex = /^\[(\w+)\]/
+// The pattern represents the following:
+// A sequence of non-tab chars at the start of input followed by a tab
+// Another sequence of non-tabs followed by a tab
+// Capture a group of alphanumeric chars enclosed in [ and ]
+const logLevelRegex = /^[^\t]+\t[^\t]+\t\[(\w+)\]/
 
-export function parseLogLevel(tsvMessage: string): string | undefined {
+export function parseLogLevel(tsvMessage: string): string | null {
   // Messages logged manually are tab separated value strings of three columns:
   // date string (ISO8601), request ID, log message
-  const messageColumns = tsvMessage.split("\t")
-  if (messageColumns.length != 3) {
-    return undefined
-  }
-  const message = messageColumns[2]
-  const match = logLevelRegex.exec(message)
-  if (match) {
-    return match[1].toLowerCase()
-  } else {
-    return undefined
-  }
+  const match = logLevelRegex.exec(tsvMessage)
+  return match && match[1].toLowerCase()
 }
 
 export const handler: AwsLambda.Handler = (event: CloudwatchLogGroupsEvent, context, callback) => {
