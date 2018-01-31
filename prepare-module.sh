@@ -12,13 +12,13 @@ set -o pipefail
 mkdir -p lambda-files
 echo "* Compiling TypeScript sources"
 npm run-script build
-cp package.json lambda-files
+cp package.json package-lock.json lambda-files
 cd lambda-files || exit "Directory 'lambda-files' does not exist"
 echo "* Installing Javascript dependencies for Lambda"
 npm install --no-package-lock --production
 echo "* Removing test folder and package.json from Lambda source files"
 rm -rf test
-rm package.json
+rm package.json package-lock.json
 cd ..
 echo "* Cleaning out unnecessary files from Lambda's node_modules"
 ./node_modules/.bin/modclean --no-progress --run --path lambda-files
