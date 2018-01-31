@@ -50,8 +50,8 @@ function getEnvVarOrFail(varName: string): string {
 // The pattern represents the following:
 // A sequence of non-tab chars at the start of input followed by a tab
 // Another sequence of non-tabs followed by a tab
-// Capture a group of alphanumeric chars enclosed in [ and ]
-const logLevelRegex = /^[^\t]+\t[^\t]+\t\[(\w+)\]/
+// Capture a group of alphanumeric chars leading up to a ':'
+const logLevelRegex = /^[^\t]+\t[^\t]+\t(\w+):/
 
 export function parseLogLevel(tsvMessage: string): string | null {
   // Messages logged manually are tab separated value strings of three columns:
