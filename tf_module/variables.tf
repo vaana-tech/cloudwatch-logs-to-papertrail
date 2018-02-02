@@ -28,6 +28,6 @@ variable "lambda_name_prefix" {
 }
 
 variable "parse_log_levels" {
-    description = "If true, the log entries will be parsed for markers describing their log level"
+    description = "If true, the log entries will be parsed for markers describing their log level, see README.md in repo for details"
     default = "false"
 }
