@@ -30,7 +30,6 @@ To use the module in Terraform add, the segment below to your Terraform configur
 module "cloudwatch-log-group-x-papertrail" {
     source = "github.com/vaana-tech/cloudwatch-logs-to-papertrail//tf_module?ref=GIT_TAG_TO_USE"
     monitor_log_group_name = "/aws/lambda/my-lambda-function"
-    monitor_log_group_arn = ARN_OF_THE_LOG_GROUP
     papertrail_host = "logsX.papertrailapp.com"
     papertrail_port = "12345"
     filter_pattern = FILTER_PATTERN | ""

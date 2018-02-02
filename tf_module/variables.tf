@@ -2,10 +2,6 @@ variable "monitor_log_group_name" {
     description = "The name of the log group which should be sent to Papertrail"
 }
 
-variable "monitor_log_group_arn" {
-    description = "The ARN of the log group which should be sent to Papertrail"
-}
-
 variable "papertrail_host" {
     description = "FQDN or IP of the Papertrail service endpoint"
 }
