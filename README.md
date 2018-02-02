@@ -33,10 +33,11 @@ module "cloudwatch-log-group-x-papertrail" {
     monitor_log_group_arn = ARN_OF_THE_LOG_GROUP
     papertrail_host = "logsX.papertrailapp.com"
     papertrail_port = "12345"
-    filter_pattern = FILTER_PATTERN or empty string
+    filter_pattern = FILTER_PATTERN | ""
     timeout = "10"
     lambda_log_role_arn = ARN_OF_LAMDA_ROLE_WITH_CW_LOGS_WRITE_PERMISSION
     lambda_name_prefix = "MyLambdaFunction"
+    parse_log_levels = "true"
 }
 ```
 
@@ -49,6 +50,7 @@ Note: Some of the variables have default values and don't need to be explicitly 
 3. Using Terraform modules directly from Github reporitories does not support proper versioning, but you can use the `ref` query parameter to refer to a specific tag in the repository, please check the CHANGELOG.md file for which versions are available and what has been updated in each version
 4. Check your Papertrail "Destination settings" for the correct values for `papertrail_host` and `papertrail_port`
 5. You may have noticed that we have checked in some Javascript files that are built from typescript files as well as node_modules dependencies into version control. There are two reasons for this: 1) We rely on Github for hosting the files, for simplicity, and 2) We want to reduce the number of system dependencies for the user, this way the user doesn't even need node/npm
+6. If you enable the `parse_log_levels` functionality to parse out the log level from the cloudwatch log messages, you must use the npm winston simple log format that prefixes log entries with "LOGLEVEL:"
 
 # Acknowledgements
 

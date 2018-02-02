@@ -16,6 +16,6 @@
     /* Experimental Options */
   },
   "include": [
-    "cloudwatch-papertrail.ts"
+    "cloudwatch-papertrail.ts", "test/*.ts"
   ]
 }
