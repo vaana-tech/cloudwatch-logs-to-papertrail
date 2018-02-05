@@ -5,8 +5,11 @@
   "main": "cloudwatch-papertrail.ts",
   "scripts": {
     "build": "tsc",
-    "clean": "rm -rf lambda-files",
+    "clean": "rm -rf tf_module/lambda-files",
     "test": "mocha --require ts-node/register --watch-extensions ts,tsx \"test/**/*.{ts,tsx}\""
+  },
+  "engines": {
+    "node": "6.10.3"
   },
   "author": "Vaana",
   "license": "MIT",
@@ -18,6 +21,7 @@
     "ceylon": "0.9.1",
     "mocha": "4.0.1",
     "modclean": "2.1.2",
+    "removeNPMAbsolutePaths": "1.0.4",
     "ts-node": "4.0.2",
     "typescript": "2.6.2"
   },
