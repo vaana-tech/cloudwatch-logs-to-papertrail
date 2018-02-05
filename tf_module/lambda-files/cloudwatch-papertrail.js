@@ -24,23 +24,18 @@ function getEnvVarOrFail(varName) {
     }
     return value;
 }
-// Should match for example: "[error] The database has exploded"
-const logLevelRegex = /^\[(\w+)\]/;
+// Should match winston simple log format for example: "error: The database has exploded"
+// For more information see https://github.com/winstonjs/winston
+// The pattern represents the following:
+// A sequence of non-tab chars at the start of input followed by a tab
+// Another sequence of non-tabs followed by a tab
+// Capture a group of alphanumeric chars leading up to a ':'
+const logLevelRegex = /^[^\t]+\t[^\t]+\t(\w+):/;
 function parseLogLevel(tsvMessage) {
     // Messages logged manually are tab separated value strings of three columns:
     // date string (ISO8601), request ID, log message
-    const messageColumns = tsvMessage.split("\t");
-    if (messageColumns.length != 3) {
-        return undefined;
-    }
-    const message = messageColumns[2];
-    const match = logLevelRegex.exec(message);
-    if (match) {
-        return match[1].toLowerCase();
-    }
-    else {
-        return undefined;
-    }
+    const match = logLevelRegex.exec(tsvMessage);
+    return match && match[1].toLowerCase();
 }
 exports.parseLogLevel = parseLogLevel;
 exports.handler = (event, context, callback) => {

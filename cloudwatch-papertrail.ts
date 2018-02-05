@@ -46,7 +46,8 @@ function getEnvVarOrFail(varName: string): string {
   return value
 }
 
-// Should match for example: "[error] The database has exploded"
+// Should match winston simple log format for example: "error: The database has exploded"
+// For more information see https://github.com/winstonjs/winston
 // The pattern represents the following:
 // A sequence of non-tab chars at the start of input followed by a tab
 // Another sequence of non-tabs followed by a tab
