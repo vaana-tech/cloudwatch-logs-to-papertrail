@@ -75,8 +75,8 @@ export const handler: AwsLambda.Handler = (event: CloudwatchLogGroupsEvent, cont
       const papertrailTransport = new winston.transports.Papertrail({
         host,
         port,
-        program: logData.logGroup,
-        hostname: logData.logStream,
+        program: logData.logStream,
+        hostname: logData.logGroup,
         flushOnClose: true,
         colorize: true,
       })
