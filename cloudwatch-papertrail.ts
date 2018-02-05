@@ -78,6 +78,7 @@ export const handler: AwsLambda.Handler = (event: CloudwatchLogGroupsEvent, cont
         program: logData.logGroup,
         hostname: logData.logStream,
         flushOnClose: true,
+        colorize: true,
       })
 
       const logger = new (winston.Logger)({

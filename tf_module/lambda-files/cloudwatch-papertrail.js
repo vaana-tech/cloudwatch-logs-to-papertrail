@@ -53,6 +53,7 @@ exports.handler = (event, context, callback) => {
             program: logData.logGroup,
             hostname: logData.logStream,
             flushOnClose: true,
+            colorize: true,
         });
         const logger = new (winston.Logger)({
             transports: [papertrailTransport]
