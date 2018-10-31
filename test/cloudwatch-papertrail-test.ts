@@ -1,5 +1,4 @@
 import expect from 'ceylon'
-import * as cloudwatchPapertrail from '../cloudwatch-papertrail'
 import { parseLogLevel } from '../cloudwatch-papertrail';
 
 describe('cloudwatch-papertrail', () => {
