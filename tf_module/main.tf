@@ -33,8 +33,5 @@ resource "aws_lambda_function" "papertrail" {
             PARSE_LOG_LEVELS = "${var.parse_log_levels}"
         }
     }
-    lifecycle {
-        ignore_changes   = [ "filename", "last_modified" ]
-    }
     source_code_hash = "${data.archive_file.papertrail_lambda.output_base64sha256}"
 }
