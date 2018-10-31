@@ -24,7 +24,7 @@ resource "aws_lambda_function" "papertrail" {
     handler = "cloudwatch-papertrail.handler"
     role = "${var.lambda_log_role_arn}"
     description = "Receives events from a CloudWatch log group and sends them to Papertrail"
-    runtime = "nodejs6.10"
+    runtime = "nodejs8.10"
     timeout = "${var.timeout}"
     environment = {
         variables = {
