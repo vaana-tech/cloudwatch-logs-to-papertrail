@@ -1,3 +1,7 @@
+locals {
+    lambda_zip_file = "cloudwatch-papertrail-lambda.zip"
+}
+
 resource "aws_lambda_permission" "allow_cloudwatch" {
   statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
@@ -14,7 +18,7 @@ resource "aws_cloudwatch_log_subscription_filter" "all_logs" {
 }
 
 resource "aws_lambda_function" "papertrail" {
-  filename      = "cloudwatch-papertrail-lambda.zip"
+  filename      = "${local.lambda_zip_file}"
   function_name = "${var.lambda_name_prefix}-papertrail-lambda"
   handler       = "cloudwatch-papertrail.handler"
   role          = "${var.lambda_log_role_arn}"
@@ -30,5 +34,5 @@ resource "aws_lambda_function" "papertrail" {
     }
   }
 
-  source_code_hash = "${data.archive_file.papertrail_lambda.output_base64sha256}"
+  source_code_hash = "${base64sha256(file(local.lambda_zip_file))}"
 }
