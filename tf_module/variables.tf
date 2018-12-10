@@ -1,5 +1,5 @@
-variable "monitor_log_group_name" {
-    description = "The name of the log group which should be sent to Papertrail"
+variable "monitor_log_group_names" {
+    description = "List of names of the log groups which should be sent to Papertrail"
 }
 
 variable "papertrail_host" {
