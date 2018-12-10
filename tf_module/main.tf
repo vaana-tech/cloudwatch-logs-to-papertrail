@@ -1,5 +1,5 @@
 locals {
-    lambda_zip_file = "cloudwatch-papertrail-lambda.zip"
+    lambda_zip_file = "${path.module}/cloudwatch-papertrail-lambda.zip"
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch" {
