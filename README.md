@@ -29,7 +29,7 @@ To use the module in Terraform add, the segment below to your Terraform configur
 ```
 module "cloudwatch-log-group-x-papertrail" {
     source = "github.com/vaana-tech/cloudwatch-logs-to-papertrail//tf_module?ref=GIT_TAG_TO_USE"
-    monitor_log_group_name = "/aws/lambda/my-lambda-function"
+    monitor_log_group_names = ["/aws/lambda/my-lambda-function", "/aws/some/other/log/group/name"]
     papertrail_host = "logsX.papertrailapp.com"
     papertrail_port = "12345"
     filter_pattern = FILTER_PATTERN | ""
@@ -44,7 +44,7 @@ Note: Some of the variables have default values and don't need to be explicitly 
 
 ## Notes
 
-1. You can check the name of your log group from the CloudWatch "Logs" tab.
+1. You can check the name of your log groups from the CloudWatch "Logs" tab.
 2. The double slash in the module source is not a typo, it is used to refer to the Terraform module subdirectory inside this repository
 3. Using Terraform modules directly from Github reporitories does not support proper versioning, but you can use the `ref` query parameter to refer to a specific tag in the repository, please check the CHANGELOG.md file for which versions are available and what has been updated in each version
 4. Check your Papertrail "Destination settings" for the correct values for `papertrail_host` and `papertrail_port`

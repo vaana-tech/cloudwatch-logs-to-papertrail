@@ -10,20 +10,28 @@ set -u
 set -o pipefail
 
 mkdir -p lambda-files
+
 echo "* Compiling TypeScript sources"
 npm run-script build
 cp package.json package-lock.json lambda-files
 cd lambda-files || exit "Directory 'lambda-files' does not exist"
+
 echo "* Installing Javascript dependencies for Lambda"
 npm install --no-package-lock --production
+
 echo "* Removing test folder and package.json from Lambda source files"
 rm -rf test
 rm package.json package-lock.json
 cd ..
+
 echo "* Cleaning out unnecessary files from Lambda's node_modules"
 ./node_modules/.bin/modclean --no-progress --run --path lambda-files
+
 echo "* Removing unnecessary underscore fields from package.json files"
 ./node_modules/.bin/removeNPMAbsolutePaths lambda-files
-echo "* Removing and replacing the lambda-files folder in tf_module"
-rm -rf tf_module/lambda-files
-mv lambda-files tf_module
+
+echo "* Removing and replacing the lambda zip file"
+ZIP_FILE_PATH="$PWD/tf_module/cloudwatch-papertrail-lambda.zip"
+rm -f "$ZIP_FILE_PATH"
+(cd lambda-files; zip -r "$ZIP_FILE_PATH" ./*)
+rm -rf lambda-files
