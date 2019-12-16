@@ -1,5 +1,5 @@
 locals {
-    lambda_zip_file = "${path.module}/cloudwatch-papertrail-lambda.zip"
+  lambda_zip_file = "${path.module}/cloudwatch-papertrail-lambda.zip"
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch" {
@@ -18,13 +18,14 @@ resource "aws_cloudwatch_log_subscription_filter" "all_logs" {
 }
 
 resource "aws_lambda_function" "papertrail" {
-  filename      = "${local.lambda_zip_file}"
-  function_name = "${var.lambda_name_prefix}-papertrail-lambda"
-  handler       = "cloudwatch-papertrail.handler"
-  role          = "${var.lambda_log_role_arn}"
-  description   = "Receives events from CloudWatch log groups and sends them to Papertrail"
-  runtime       = "nodejs8.10"
-  timeout       = "${var.timeout}"
+  filename         = "${local.lambda_zip_file}"
+  function_name    = "${var.lambda_name_prefix}-papertrail-lambda"
+  handler          = "cloudwatch-papertrail.handler"
+  role             = "${var.lambda_log_role_arn}"
+  description      = "Receives events from CloudWatch log groups and sends them to Papertrail"
+  runtime          = "nodejs8.10"
+  timeout          = "${var.timeout}"
+  source_code_hash = "${filebase64sha256(local.lambda_zip_file)}"
 
   environment {
     variables = {
@@ -34,5 +35,7 @@ resource "aws_lambda_function" "papertrail" {
     }
   }
 
-  source_code_hash = "${base64sha256(filebase64(local.lambda_zip_file))}"
+  lifecycle {
+    ignore_changes = ["last_modified"]
+  }
 }
