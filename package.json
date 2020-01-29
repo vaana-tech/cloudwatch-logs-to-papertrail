@@ -8,7 +8,7 @@
     "test": "mocha --require ts-node/register --watch-extensions ts,tsx \"test/**/*.{ts,tsx}\""
   },
   "engines": {
-    "node": "8.10.0"
+    "node": "12.14.1"
   },
   "author": "Vaana",
   "license": "MIT",
@@ -18,10 +18,10 @@
     "@types/node": "8.5.1",
     "@types/winston": "2.3.7",
     "ceylon": "0.9.1",
-    "mocha": "4.0.1",
+    "mocha": "7.0.1",
     "modclean": "3.0.0-beta.1",
     "removeNPMAbsolutePaths": "1.0.4",
-    "ts-node": "4.0.2",
+    "ts-node": "8.6.2",
     "typescript": "2.6.2"
   },
   "dependencies": {
