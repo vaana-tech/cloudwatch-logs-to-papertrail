@@ -24,11 +24,13 @@ The solution mentioned above is provided as a Terraform module that can be used 
 
 Note! This repository is provided under the MIT license and we make no guarantees about the safety of the source code that is located here. Please review the source code yourself before using the solution and don't blindly trust other people's code online.
 
-To use the module in Terraform add, the segment below to your Terraform configuration:
+## Usage with Terraform 0.11.x
+
+To use the module with Terraform 0.11.x, add the segment below to your Terraform configuration:
 
 ```
 module "cloudwatch-log-group-x-papertrail" {
-    source = "github.com/vaana-tech/cloudwatch-logs-to-papertrail//tf_module?ref=GIT_TAG_TO_USE"
+    source = "github.com/vaana-tech/cloudwatch-logs-to-papertrail//tf_module_0.11?ref=GIT_TAG_TO_USE"
     monitor_log_group_names = ["/aws/lambda/my-lambda-function", "/aws/some/other/log/group/name"]
     papertrail_host = "logsX.papertrailapp.com"
     papertrail_port = "12345"
@@ -40,7 +42,14 @@ module "cloudwatch-log-group-x-papertrail" {
 }
 ```
 
-Note: Some of the variables have default values and don't need to be explicitly specified, check the `tf_module/variables.tf` file for the default values.
+Note: Some of the variables have default values and don't need to be explicitly specified, check the `tf_module_0.11/variables.tf` file for the default values.
+
+## Usage with Terraform 0.12.x
+
+To use the module with Terraform 0.12.x, do the same as for 0.11, but use the following source line instead:
+```
+source = "github.com/vaana-tech/cloudwatch-logs-to-papertrail//tf_module_0.12?ref=GIT_TAG_TO_USE"
+```
 
 ## Notes
 

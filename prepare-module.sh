@@ -31,7 +31,9 @@ echo "* Removing unnecessary underscore fields from package.json files"
 ./node_modules/.bin/removeNPMAbsolutePaths lambda-files
 
 echo "* Removing and replacing the lambda zip file"
-ZIP_FILE_PATH="$PWD/tf_module/cloudwatch-papertrail-lambda.zip"
-rm -f "$ZIP_FILE_PATH"
-(cd lambda-files; zip -r "$ZIP_FILE_PATH" ./*)
+ZIP_FILE_PATH_TF_11="$PWD/tf_module_0.11/cloudwatch-papertrail-lambda.zip"
+ZIP_FILE_PATH_TF_12="$PWD/tf_module_0.12/cloudwatch-papertrail-lambda.zip"
+rm -f "$ZIP_FILE_PATH_TF_11"
+(cd lambda-files; zip -r "$ZIP_FILE_PATH_TF_11" ./*)
+cp $ZIP_FILE_PATH_TF_11 $ZIP_FILE_PATH_TF_12
 rm -rf lambda-files
