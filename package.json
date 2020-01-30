@@ -5,7 +5,6 @@
   "main": "cloudwatch-papertrail.ts",
   "scripts": {
     "build": "tsc",
-    "clean": "rm -rf tf_module/lambda-files",
     "test": "mocha --require ts-node/register --watch-extensions ts,tsx \"test/**/*.{ts,tsx}\""
   },
   "engines": {
