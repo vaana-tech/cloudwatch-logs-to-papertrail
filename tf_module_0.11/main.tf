@@ -1,5 +1,5 @@
 locals {
-    lambda_zip_file = "${path.module}/cloudwatch-papertrail-lambda.zip"
+  lambda_zip_file = "${path.module}/cloudwatch-papertrail-lambda.zip"
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch" {
@@ -23,7 +23,7 @@ resource "aws_lambda_function" "papertrail" {
   handler       = "cloudwatch-papertrail.handler"
   role          = "${var.lambda_log_role_arn}"
   description   = "Receives events from CloudWatch log groups and sends them to Papertrail"
-  runtime       = "nodejs8.10"
+  runtime       = "nodejs12.x"
   timeout       = "${var.timeout}"
 
   environment = {
