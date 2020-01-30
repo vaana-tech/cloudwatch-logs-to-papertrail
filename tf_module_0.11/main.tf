@@ -36,6 +36,6 @@ resource "aws_lambda_function" "papertrail" {
   }
 
   lifecycle {
-    ignore_changes = ["last_modified"]
+    ignore_changes = ["last_modified","filename"]
   }
 }
