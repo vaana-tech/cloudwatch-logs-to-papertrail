@@ -25,6 +25,7 @@ resource "aws_lambda_function" "papertrail" {
   description   = "Receives events from CloudWatch log groups and sends them to Papertrail"
   runtime       = "nodejs12.x"
   timeout       = "${var.timeout}"
+  source_code_hash = "${base64sha256(file(local.lambda_zip_file))}"
 
   environment = {
     variables = {
@@ -34,5 +35,7 @@ resource "aws_lambda_function" "papertrail" {
     }
   }
 
-  source_code_hash = "${base64sha256(file(local.lambda_zip_file))}"
+  lifecycle {
+    ignore_changes = ["last_modified"]
+  }
 }
