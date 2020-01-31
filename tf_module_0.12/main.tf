@@ -36,11 +36,10 @@ resource "aws_lambda_function" "papertrail" {
   }
 
   lifecycle {
-    # NOTE: 
-    # Do not add filename to the ignored changes. 
-    # This will produce an error in the client due to 
-    # the fact that terraform creates temporary
-    # modules artifacts in random locations
+    # NOTE: we'd like to add 'filename' to ignore_changes as it is random
+    # because Terraform downloads this module to folder with a random string.
+    # However, this causes problems when deploying the Lambda in some situatons,
+    # so at the moment we cannot add it.
     ignore_changes = ["last_modified"]
   }
 }

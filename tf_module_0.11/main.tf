@@ -18,13 +18,13 @@ resource "aws_cloudwatch_log_subscription_filter" "all_logs" {
 }
 
 resource "aws_lambda_function" "papertrail" {
-  filename      = "${local.lambda_zip_file}"
-  function_name = "${var.lambda_name_prefix}-papertrail-lambda"
-  handler       = "cloudwatch-papertrail.handler"
-  role          = "${var.lambda_log_role_arn}"
-  description   = "Receives events from CloudWatch log groups and sends them to Papertrail"
-  runtime       = "nodejs12.x"
-  timeout       = "${var.timeout}"
+  filename         = "${local.lambda_zip_file}"
+  function_name    = "${var.lambda_name_prefix}-papertrail-lambda"
+  handler          = "cloudwatch-papertrail.handler"
+  role             = "${var.lambda_log_role_arn}"
+  description      = "Receives events from CloudWatch log groups and sends them to Papertrail"
+  runtime          = "nodejs12.x"
+  timeout          = "${var.timeout}"
   source_code_hash = "${base64sha256(file(local.lambda_zip_file))}"
 
   environment = {
@@ -36,11 +36,10 @@ resource "aws_lambda_function" "papertrail" {
   }
 
   lifecycle {
-        # NOTE: 
-    # Do not add filename to the ignored changes. 
-    # This will produce an error in the client due to 
-    # the fact that terraform creates temporary
-    # modules artifacts in random locations
- ignore_changes = ["last_modified"]
+    # NOTE: we'd like to add 'filename' to ignore_changes as it is random
+    # because Terraform downloads this module to folder with a random string.
+    # However, this causes problems when deploying the Lambda in some situatons,
+    # so at the moment we cannot add it.
+    ignore_changes = ["last_modified"]
   }
 }
