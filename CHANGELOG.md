@@ -14,3 +14,9 @@
 
 * Update to Node 12.14.1 due to lack of support from AWS (see: https://docs.aws.amazon.com/lambda/latest/dg/runtime-support-policy.html)
 * Update dependencies to fix `WS-2018-0590`
+
+## 0.1.1 (2020-01-31)
+
+### Lambda
+
+* Do not ignore changes to filename in `aws_lambda_function` resource due to issues it can cause when applying the configuration. 
