@@ -76,7 +76,7 @@ export const handler: AwsLambda.Handler = (event: CloudwatchLogGroupsEvent, cont
         host,
         port,
         program: logData.logStream,
-        hostname: logData.logGroup,
+        hostname: logData.logGroup + ':' + logData.owner,
         flushOnClose: true,
         colorize: true,
       })
