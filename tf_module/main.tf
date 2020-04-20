@@ -36,6 +36,6 @@ resource "aws_lambda_function" "papertrail" {
     source_code_hash = "${data.archive_file.papertrail_lambda.output_base64sha256}"
 
     lifecycle {
-      ignore_changes = ["filename"]
+      ignore_changes = ["filename", "last_modified"]
     }
 }
