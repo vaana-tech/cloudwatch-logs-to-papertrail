@@ -29,4 +29,4 @@
 
 ### Lambda
 
-*  Fix security vulnerabilities
+*  Fix security vulnerabilities of dev dependency
