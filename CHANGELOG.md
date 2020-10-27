@@ -20,3 +20,13 @@
 ### Lambda
 
 * Do not ignore changes to filename in `aws_lambda_function` resource due to issues it can cause when applying the configuration. 
+
+## 0.1.2 (2020-10-27)
+
+### Terraform
+
+* Update 0.12 version code to remove deprecation warning
+
+### Lambda
+
+*  Update dev dependencies to fix `GHSA-p9pc-299p-vxgp` and `CVE-2020-8203` 
