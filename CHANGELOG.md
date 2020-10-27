@@ -29,4 +29,4 @@
 
 ### Lambda
 
-*  Fix security vulnerabilities of dev dependency
+*  Update dev dependencies to fix `GHSA-p9pc-299p-vxgp` and `CVE-2020-8203` 
