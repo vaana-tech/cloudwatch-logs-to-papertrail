@@ -32,6 +32,7 @@ resource "aws_lambda_function" "papertrail" {
       PAPERTRAIL_HOST  = "${var.papertrail_host}"
       PAPERTRAIL_PORT  = "${var.papertrail_port}"
       PARSE_LOG_LEVELS = "${var.parse_log_levels}"
+      LOG_FORMAT       = "${var.log_format}"
     }
   }
 
