@@ -80,7 +80,10 @@ export function parseLogLevelRails(tsvMessage: string): string | null {
   // Messages logged manually are tab separated value strings of three columns:
   // date string (ISO8601), request ID, log message
   const match = logLevelRegexRails.exec(tsvMessage)
-  const mapping : IHash = {"D": 'debug','I': 'info', 'W': 'warning', 'E': 'error', 'F': 'fatal' };
+
+  // see https://github.com/winstonjs/winston#logging-levels
+  // somehow 'error' is winstons highest level? :-(
+  const mapping : IHash = {"D": 'debug','I': 'info', 'W': 'warn', 'E': 'error', 'F': 'error' };
 
   if(match) {
     return mapping[match[1].toString()]
