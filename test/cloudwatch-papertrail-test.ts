@@ -1,6 +1,9 @@
 import expect from 'ceylon'
 import { parseLogLevel, parseLogLevelRails } from '../cloudwatch-papertrail';
 
+import * as winston from 'winston'
+import 'winston-papertrail'
+
 describe('cloudwatch-papertrail', () => {
   describe('parseLogLevel', () => {
     it('should return the log level lowercased if the message starts with a marker', () => {
@@ -23,9 +26,9 @@ describe('cloudwatch-papertrail', () => {
       expect(parseLogLevelRails(logMessage)).toEqual('info')
     })
 
-    it('should return the log level warning if the message is W', () => {
+    it('should return the log level warn if the message is W', () => {
       const logMessage = "2021-02-17 16:42:46.692468 W [558:puma threadpool 004] Rack -- Started -- { :method => \"GET\", :path => \"/\", :ip => \"172.19.0.1\" }"
-      expect(parseLogLevelRails(logMessage)).toEqual('warning')
+      expect(parseLogLevelRails(logMessage)).toEqual('warn')
     })
 
     it('should return the log level error if the message is E', () => {
@@ -33,9 +36,9 @@ describe('cloudwatch-papertrail', () => {
       expect(parseLogLevelRails(logMessage)).toEqual('error')
     })
 
-    it('should return the log level fatal if the message is F', () => {
+    it('should return the log level crit if the message is F', () => {
       const logMessage = "2021-02-17 16:42:46.692468 F [558:puma threadpool 004] Rack -- Started -- { :method => \"GET\", :path => \"/\", :ip => \"172.19.0.1\" }"
-      expect(parseLogLevelRails(logMessage)).toEqual('fatal')
+      expect(parseLogLevelRails(logMessage)).toEqual('crit')
     })
 
     it("should return null if there is no log level marker", () => {
@@ -44,3 +47,5 @@ describe('cloudwatch-papertrail', () => {
   })
 
 })
+
+

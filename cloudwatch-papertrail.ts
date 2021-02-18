@@ -82,8 +82,7 @@ export function parseLogLevelRails(tsvMessage: string): string | null {
   const match = logLevelRegexRails.exec(tsvMessage)
 
   // see https://github.com/winstonjs/winston#logging-levels
-  // somehow 'error' is winstons highest level? :-(
-  const mapping : IHash = {"D": 'debug','I': 'info', 'W': 'warn', 'E': 'error', 'F': 'error' };
+  const mapping : IHash = {"D": 'debug','I': 'info', 'W': 'warn', 'E': 'error', 'F': 'crit' };
 
   if(match) {
     return mapping[match[1].toString()]
@@ -119,7 +118,20 @@ export const handler: AwsLambda.Handler = (event: CloudwatchLogGroupsEvent, cont
         colorize: true,
       })
 
+
       const logger = new (winston.Logger)({
+        ...(logLevelFormat === 'RAILS' ? {levels: {
+                                                    debug: 7,
+                                                    info: 6,
+                                                    notice: 5,
+                                                    warning: 4,
+                                                    warn: 4,
+                                                    error: 3,
+                                                    err: 3,
+                                                    crit: 2,
+                                                    alert: 1,
+                                                    emerg: 0,
+                                                  },} : {}),
         transports: [papertrailTransport]
       });
 
