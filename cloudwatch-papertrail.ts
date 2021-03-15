@@ -58,43 +58,57 @@ function getEnvVarOrDefault(varName: string, defValue: string): string {
   return value
 }
 
+// Default (winston) log format
+//
 // Should match winston simple log format for example: "error: The database has exploded"
 // For more information see https://github.com/winstonjs/winston
 // The pattern represents the following:
 // A sequence of non-tab chars at the start of input followed by a tab
 // Another sequence of non-tabs followed by a tab
 // Capture a group of alphanumeric chars leading up to a ':'
-const logLevelRegex = /^[^\t]+\t[^\t]+\t(\w+):/
-// default Rails Sematic Logger format
-// <space><firs letter of level><space>
-const logLevelRegexRails = /\s([DIWEF])\s\[/
+const logLevelWinstonRegex = "^[^\t]+\t[^\t]+\t(\\w+):"
+// default log level mapping (winston => syslog)
+// maps from winston
+//   silly: 6
+//   debug: 5,
+//   verbose: 4,
+//   http: 3,
+//   info: 2,
+//   warn: 1,
+//   error: 0,
+//
+// to syslog
+//   debug: 7,
+//   info: 6,
+//   notice: 5,
+//   warning: 4,
+//   warn: 4,
+//   error: 3,
+//   err: 3,
+//   crit: 2,
+//   alert: 1,
+//   emerg: 0,
+
+const logLevelWinstonMapping = `{ "silly": "info",
+                                  "debug": "notice",
+                                  "verbose": "info",
+                                  "http": "info",
+                                  "info": "info",
+                                  "warn": "warn",
+                                  "error": "error" }`
+
+const logLevelRegex = new RegExp(getEnvVarOrDefault('LL_REGEX',logLevelWinstonRegex))
+const logLevelMapping : IHash = JSON.parse(getEnvVarOrDefault('LL_MAPPING',logLevelWinstonMapping))
 
 export function parseLogLevel(tsvMessage: string): string | null {
   // Messages logged manually are tab separated value strings of three columns:
   // date string (ISO8601), request ID, log message
   const match = logLevelRegex.exec(tsvMessage)
-  return match && match[1].toLowerCase()
-}
-
-export function parseLogLevelRails(tsvMessage: string): string | null {
-  // Messages logged manually are tab separated value strings of three columns:
-  // date string (ISO8601), request ID, log message
-  const match = logLevelRegexRails.exec(tsvMessage)
-
-  // see https://github.com/winstonjs/winston#logging-levels
-  const mapping : IHash = {"D": 'debug','I': 'info', 'W': 'warn', 'E': 'error', 'F': 'crit' };
 
   if(match) {
-    return mapping[match[1].toString()]
+    return logLevelMapping[match[1].toString()]
   }
   return null
-}
-
-function parseTypedLogLevel(type: string, tsvMessage: string): string | null {
-  if(type == 'RAILS') {
-    return parseLogLevelRails(tsvMessage)
-  }
-  return parseLogLevel(tsvMessage)
 }
 
 export const handler: AwsLambda.Handler = (event: CloudwatchLogGroupsEvent, context, callback) => {
@@ -120,24 +134,24 @@ export const handler: AwsLambda.Handler = (event: CloudwatchLogGroupsEvent, cont
 
 
       const logger = new (winston.Logger)({
-        ...(logLevelFormat === 'RAILS' ? {levels: {
-                                                    debug: 7,
-                                                    info: 6,
-                                                    notice: 5,
-                                                    warning: 4,
-                                                    warn: 4,
-                                                    error: 3,
-                                                    err: 3,
-                                                    crit: 2,
-                                                    alert: 1,
-                                                    emerg: 0,
-                                                  },} : {}),
-        transports: [papertrailTransport]
+        transports: [papertrailTransport],
+        levels: {
+          debug: 7,
+          info: 6,
+          notice: 5,
+          warning: 4,
+          warn: 4,
+          error: 3,
+          err: 3,
+          crit: 2,
+          alert: 1,
+          emerg: 0,
+        }
       });
 
       logData.logEvents.forEach(function (event) {
         const logLevel = shouldParseLogLevels
-          ? parseTypedLogLevel(logLevelFormat, event.message) || 'info'
+          ? parseLogLevel(event.message) || 'info'
           : 'info'
         logger.log(logLevel, event.message);
       });

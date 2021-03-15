@@ -1,9 +1,10 @@
 import expect from 'ceylon'
-import { parseLogLevel, parseLogLevelRails } from '../cloudwatch-papertrail';
+import { parseLogLevel } from '../cloudwatch-papertrail';
 
 import * as winston from 'winston'
 import 'winston-papertrail'
 
+// only tests the default log level smapping
 describe('cloudwatch-papertrail', () => {
   describe('parseLogLevel', () => {
     it('should return the log level lowercased if the message starts with a marker', () => {
@@ -13,36 +14,6 @@ describe('cloudwatch-papertrail', () => {
 
     it("should return null if there is no log level marker", () => {
       expect(parseLogLevel('Successfully handled request')).toEqual(null)
-    })
-  })
-  describe('parseLogLevelRails', () => {
-    it('should return the log level debug if the message is D', () => {
-      const logMessage = "2021-02-17 16:42:46.692468 D [558:puma threadpool 004] Rack -- Started -- { :method => \"GET\", :path => \"/\", :ip => \"172.19.0.1\" }"
-      expect(parseLogLevelRails(logMessage)).toEqual('debug')
-    })
-
-    it('should return the log level info if the message is I', () => {
-      const logMessage = "2021-02-17 16:42:46.692468 I [558:puma threadpool 004] Rack -- Started -- { :method => \"GET\", :path => \"/\", :ip => \"172.19.0.1\" }"
-      expect(parseLogLevelRails(logMessage)).toEqual('info')
-    })
-
-    it('should return the log level warn if the message is W', () => {
-      const logMessage = "2021-02-17 16:42:46.692468 W [558:puma threadpool 004] Rack -- Started -- { :method => \"GET\", :path => \"/\", :ip => \"172.19.0.1\" }"
-      expect(parseLogLevelRails(logMessage)).toEqual('warn')
-    })
-
-    it('should return the log level error if the message is E', () => {
-      const logMessage = "2021-02-17 16:42:46.692468 E [558:puma threadpool 004] Rack -- Started -- { :method => \"GET\", :path => \"/\", :ip => \"172.19.0.1\" }"
-      expect(parseLogLevelRails(logMessage)).toEqual('error')
-    })
-
-    it('should return the log level crit if the message is F', () => {
-      const logMessage = "2021-02-17 16:42:46.692468 F [558:puma threadpool 004] Rack -- Started -- { :method => \"GET\", :path => \"/\", :ip => \"172.19.0.1\" }"
-      expect(parseLogLevelRails(logMessage)).toEqual('crit')
-    })
-
-    it("should return null if there is no log level marker", () => {
-      expect(parseLogLevelRails('Successfully handled request')).toEqual(null)
     })
   })
 
