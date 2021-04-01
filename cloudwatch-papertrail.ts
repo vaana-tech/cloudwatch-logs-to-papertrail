@@ -97,12 +97,10 @@ const logLevelWinstonMapping = `{ "silly": "info",
                                   "warn": "warn",
                                   "error": "error" }`
 
-const logLevelRegex = new RegExp(getEnvVarOrDefault('LL_REGEX',logLevelWinstonRegex))
-const logLevelMapping : IHash = JSON.parse(getEnvVarOrDefault('LL_MAPPING',logLevelWinstonMapping))
+const logLevelRegex = new RegExp(getEnvVarOrDefault('LOG_LEVEL_REGEX',logLevelWinstonRegex))
+const logLevelMapping : IHash = JSON.parse(getEnvVarOrDefault('LOG_LEVEL_MAPPING',logLevelWinstonMapping))
 
 export function parseLogLevel(tsvMessage: string): string | null {
-  // Messages logged manually are tab separated value strings of three columns:
-  // date string (ISO8601), request ID, log message
   const match = logLevelRegex.exec(tsvMessage)
 
   if(match) {
@@ -115,7 +113,6 @@ export const handler: AwsLambda.Handler = (event: CloudwatchLogGroupsEvent, cont
   const host = getEnvVarOrFail('PAPERTRAIL_HOST')
   const port = getEnvVarOrFail('PAPERTRAIL_PORT')
   const shouldParseLogLevels = getEnvVarOrFail('PARSE_LOG_LEVELS') === "true"
-  const logLevelFormat = getEnvVarOrDefault('LOG_FORMAT','WINSTON')
   const payload = new Buffer(event.awslogs.data, 'base64');
 
   unarchiveLogData(payload)

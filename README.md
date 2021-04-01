@@ -24,7 +24,7 @@ The solution mentioned above is provided as a Terraform module that can be used 
 
 Note! This repository is provided under the MIT license and we make no guarantees about the safety of the source code that is located here. Please review the source code yourself before using the solution and don't blindly trust other people's code online.
 
-## Customer REGEX
+## Custom REGEX
 
 You can customize the log parsing by adding a regex and a mapping in the environment
 
