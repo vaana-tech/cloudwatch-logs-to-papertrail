@@ -29,10 +29,11 @@ resource "aws_lambda_function" "papertrail" {
 
   environment = {
     variables = {
-      PAPERTRAIL_HOST  = "${var.papertrail_host}"
-      PAPERTRAIL_PORT  = "${var.papertrail_port}"
-      PARSE_LOG_LEVELS = "${var.parse_log_levels}"
-      LOG_FORMAT       = "${var.log_format}"
+      PAPERTRAIL_HOST   = "${var.papertrail_host}"
+      PAPERTRAIL_PORT   = "${var.papertrail_port}"
+      PARSE_LOG_LEVELS  = "${var.parse_log_levels}"
+      LOG_LEVEL_REGEX   = "${var.log_level_regex}"
+      LOG_LEVEL_MAPPING = "${var.log_level_mapping}"
     }
   }
 
