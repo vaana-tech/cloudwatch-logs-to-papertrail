@@ -24,6 +24,24 @@ The solution mentioned above is provided as a Terraform module that can be used 
 
 Note! This repository is provided under the MIT license and we make no guarantees about the safety of the source code that is located here. Please review the source code yourself before using the solution and don't blindly trust other people's code online.
 
+## Custom REGEX
+
+You can customize the log parsing by adding a regex and a mapping in the environment
+
+e.g RAILS semantic logger
+
+```
+LOG_LEVEL_REGEX='\s([DIWEF])\s\['
+LOG_LEVEL_MAPPING='{"D": "debug","I": "info", "W": "warn", "E": "error", "F": "crit"}'
+```
+
+default for winston (Leave blank to use these)
+
+```
+LOG_LEVEL_REGEX='^[^\t]+\t[^\t]+\t(\w+):'
+LOG_LEVEL_MAPPING='{ "silly": "info","debug": "notice","verbose": "info","http": "info","info": "info", "warn": "warn","error": "error" }'
+```
+
 ## Usage with Terraform 0.11.x
 
 To use the module with Terraform 0.11.x, add the segment below to your Terraform configuration:

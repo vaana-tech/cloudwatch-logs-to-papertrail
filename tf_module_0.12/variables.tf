@@ -32,3 +32,15 @@ variable "parse_log_levels" {
   description = "If true, the log entries will be parsed for markers describing their log level, see README.md in repo for details"
   default     = "false"
 }
+
+variable "log_level_regex" {
+  description = "log level regex, should have one capture group. e.g. for Rails: \\s([DIWEF])\\s\\["
+  type = string
+  default = ""
+}
+
+variable "log_level_mapping" {
+  description = "log level mapping, hash e.g for captured {\"D\": \"debug\",\"I\": \"info\", \"W\": \"warn\", \"E\": \"error\", \"F\": \"crit\"}"
+  type = string
+  default = ""
+}
