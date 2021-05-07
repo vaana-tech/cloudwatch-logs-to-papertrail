@@ -33,10 +33,6 @@ variable "parse_log_levels" {
   default     = "false"
 }
 
-variable "log_format" {
-  description = "when parse_log_levels == 'true'this defines the log format: WINSTON(default) or RAILS"
-  default     = "WINSTON"
-}
 
 variable "log_level_regex" {
   description = "log level regex, should have one capture group. e.g. for Rails: \\s([DIWEF])\\s\\["
