@@ -4,7 +4,7 @@ import { parseLogLevel } from '../cloudwatch-papertrail';
 import * as winston from 'winston'
 import 'winston-papertrail'
 
-// only tests the default log level smapping
+// only tests the default log level mapping
 describe('cloudwatch-papertrail', () => {
   describe('parseLogLevel', () => {
     it('should return the log level lowercased if the message starts with a marker', () => {
