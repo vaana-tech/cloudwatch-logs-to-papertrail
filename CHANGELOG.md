@@ -19,7 +19,7 @@
 
 ### Lambda
 
-* Do not ignore changes to filename in `aws_lambda_function` resource due to issues it can cause when applying the configuration. 
+* Do not ignore changes to filename in `aws_lambda_function` resource due to issues it can cause when applying the configuration.
 
 ## 0.1.2 (2020-10-27)
 
@@ -29,4 +29,10 @@
 
 ### Lambda
 
-*  Update dev dependencies to fix `GHSA-p9pc-299p-vxgp` and `CVE-2020-8203` 
+*  Update dev dependencies to fix `GHSA-p9pc-299p-vxgp` and `CVE-2020-8203`
+
+## 0.2.0 (2021-05-07)
+
+### Lambda
+
+* Added capability to do regex based log parsing
